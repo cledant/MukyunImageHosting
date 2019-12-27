@@ -1,3 +1,6 @@
 [submodule "external/pistache"]
 	path = external/pistache
 	url = https://github.com/oktal/pistache.git
+[submodule "external/json"]
+	path = external/json
+	url = https://github.com/nlohmann/json.git
