@@ -9,6 +9,8 @@
 #include <pistache/endpoint.h>
 #include <pistache/net.h>
 
+#include "nlohmann/json.hpp"
+
 #include "file_saving.hpp"
 
 namespace http_server {
@@ -26,13 +28,28 @@ struct server_config
     uint64_t request_max_size;
     Pistache::Address addr;
     std::string api_key;
+    std::string save_folder;
+    std::string url_address;
 
     static constexpr uint32_t DEFAULT_THREAD_NB = 4;
     static constexpr uint64_t DEFAULT_REQUEST_SIZE = 1024 * 1024 * 10;
-    static constexpr char const *DEFAULT_ADDRESS = "127.0.0.10";
+    static constexpr char const *DEFAULT_SERVER_ADDRESS = "127.0.0.10";
     static constexpr uint16_t DEFAULT_PORT = 4242;
     static constexpr char const *DEFAULT_API_KEY = "Patchouli";
+    static constexpr char const *DEFAULT_SAVE_FOLDER = ".";
+    static constexpr char const *DEFAULT_URL_ADDRESS = "http://127.0.0.0.10";
+
+    static constexpr char const *JSON_NB_THREAD = "nb_thread";
+    static constexpr char const *JSON_REQUEST_SIZE = "request_size";
+    static constexpr char const *JSON_SERVER_ADDRESS = "server_address";
+    static constexpr char const *JSON_SERVER_PORT = "server_port";
+    static constexpr char const *JSON_API_KEY = "api_key";
+    static constexpr char const *JSON_SAVE_FOLDER = "save_folder";
+    static constexpr char const *JSON_URL_ADDRESS = "url_address";
 };
+
+void to_json(nlohmann::json &json, server_config const &cfg);
+void from_json(nlohmann::json const &json, server_config &cfg);
 
 class server_endpoint
 {

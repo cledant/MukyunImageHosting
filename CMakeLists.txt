@@ -6,6 +6,10 @@ option(PISTACHE_ENABLE_NETWORK_TESTS "" OFF)
 option(PISTACHE_INSTALL "" OFF)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/pistache)
 
+#Setup nlohmann json
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/json)
+
 #Projet libs
 add_subdirectory(libraries/http_server)
 add_subdirectory(libraries/file_saving)
