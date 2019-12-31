@@ -18,9 +18,9 @@ class file_saving
     file_saving(file_saving &&src) = delete;
     file_saving &operator=(file_saving &&rhs) = delete;
 
-    uint64_t save_file(std::string const &file_content,
-                       std::string const &folder,
-                       char const *type);
+    std::string save_file(std::string const &file_content,
+                          std::string const &folder,
+                          char const *type);
 
   private:
     std::mt19937_64 _generator;

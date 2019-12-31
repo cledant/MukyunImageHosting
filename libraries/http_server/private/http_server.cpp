@@ -126,16 +126,20 @@ server_endpoint::_save_image(Pistache::Rest::Request const &request,
     auto mime = ct->mime().toString();
     for (uint32_t i = 0; i < NB_SUPPORTED_TYPE; ++i) {
         if (mime == valid_mime_array[i]) {
-            //
-            uint64_t nb_filename =
+            // Checking body content
+            if (request.body().empty()) {
+                response.send(Http::Code::Ok, "Empty file are not saved\n");
+                return;
+            }
+            // Saving file
+            std::string filename =
               _fs.save_file(request.body(), _config.save_folder, type_array[i]);
-            if (nb_filename) {
-                std::string url = _config.url_address + "/" +
-                                  std::to_string(nb_filename) + type_array[i];
+            if (!filename.empty()) {
+                std::string url = _config.url_address + "/" + filename + "\n";
                 response.send(Http::Code::Ok, url);
                 return;
             }
-            response.send(Http::Code::Ok, "Failed to save file");
+            response.send(Http::Code::Ok, "Failed to save file\n");
             return;
         }
     }

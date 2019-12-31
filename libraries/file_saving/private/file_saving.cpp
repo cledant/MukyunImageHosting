@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <chrono>
 
 namespace file_manipulation {
 
@@ -9,20 +10,28 @@ file_saving::file_saving()
   : _generator(std::random_device()())
 {}
 
-uint64_t
+std::string
 file_saving::save_file(std::string const &file_content,
                        std::string const &folder,
                        char const *type)
 {
-    std::uniform_int_distribution<uint64_t> int_distri(
-      1, std::numeric_limits<uint64_t>::max());
+    std::uniform_int_distribution<uint32_t> int_distri(
+      0, std::numeric_limits<uint32_t>::max());
 
-    uint64_t nb_filename = int_distri(_generator);
-    std::string file_name = folder + "/" + std::to_string(nb_filename) + type;
-    if (!_save_on_disk(file_content, file_name)) {
-        return (nb_filename);
+    // Concat time since epoch + random uint64 for filename
+    auto time = std::chrono::system_clock::now();
+    std::string filename =
+      std::to_string(std::chrono::duration_cast<std::chrono::seconds>(
+                       time.time_since_epoch())
+                       .count()) +
+      "_" + std::to_string(int_distri(_generator)) + type;
+
+    // Saving file
+    std::string save_filename = folder + "/" + filename;
+    if (!_save_on_disk(file_content, save_filename)) {
+        return (filename);
     }
-    return (0);
+    return (std::string());
 }
 
 uint8_t
