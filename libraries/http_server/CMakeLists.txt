@@ -16,5 +16,5 @@ else ()
 	target_link_libraries(http_listener file_saving pistache pistache_static
 			pthread nlohmann_json::nlohmann_json)
 endif ()
-target_compile_options(http_listener PRIVATE -Wall -Wextra -Werror -std=c++17 -march=native -flto)
+target_compile_options(http_listener PRIVATE -Wall -Wextra -Werror -std=c++17 -flto)
 add_dependencies(http_listener file_saving pistache pistache_static nlohmann_json::nlohmann_json)

@@ -10,4 +10,4 @@ target_include_directories(file_saving
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/private)
 target_link_libraries(file_saving nlohmann_json::nlohmann_json)
-target_compile_options(file_saving PRIVATE -Wall -Wextra -Werror -std=c++17 -march=native -flto)
+target_compile_options(file_saving PRIVATE -Wall -Wextra -Werror -std=c++17 -flto)
